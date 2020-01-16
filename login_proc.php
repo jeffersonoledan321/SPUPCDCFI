@@ -11,10 +11,12 @@
 	$result=mysqli_query($con,$s);
 	$num = mysqli_num_rows($result);
 	if ($num==1) {
+		$_SESSION['username'] = $_POST['username'];
 		header("location: blank.php");
 		
 	}else{
 		
 		header("location: login.php");
+		die();
 	}
  ?>
