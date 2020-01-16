@@ -76,15 +76,11 @@ include"perfect_function.php";?>
 </div>
                 
         <?php 
-    $table_name="add_event";
-    $data=get($table_name);
-    foreach ($data as $key => $row) {
-      $id=$row['id'];
-      
-      $eventname=$row['eventname'];
-      $eventdate=$row['eventdate'];
-      $starttime=$row['starttime'];
-      $endtime=$row['endtime'];
+    $event_id = 11;
+    $data=get_attendance($event_id);
+    $row = $data->fetch_assoc();
+    $json_obj = json_decode($row['attendance']);
+    foreach ($json_obj as $key => $val) {      
       
    ?>
    <tr align="center">

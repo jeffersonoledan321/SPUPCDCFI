@@ -24,6 +24,15 @@ function get($table_name)
 	return $result;
 }
 
+// Get attendance JSON object literal
+function get_attendance($id)
+{
+	$conn = getConnection();
+	$sql = "SELECT attendance FROM add_event where id=$id";
+	$result = $conn->query($sql);
+	return $result;
+}
+
 function get_where($table_name, $id)
 {
 	$conn = getConnection();
