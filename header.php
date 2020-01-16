@@ -299,12 +299,21 @@
                   <p>Add Director</p>
                 </a>
               </li> -->
-              <li class="nav-item">
-                <a href="add_staff.php" class="nav-link">
-                  <i class="fas fa-stop-circle nav-icon"></i>
-                  <p>Add Users</p>
-                </a>
-              </li>
+              <?php
+                if ($_SESSION['acct_type'] == 1 || $_SESSION['acct_type'] == 2) {
+                  echo(
+                    '
+                    <li class="nav-item">
+                      <a href="add_staff.php" class="nav-link">
+                        <i class="fas fa-stop-circle nav-icon"></i>
+                        <p>Add Users</p>
+                      </a>
+                    </li>
+                    '
+                  );
+                }
+              ?>
+              
               <li class="nav-item">
                 <a href="add_volunteer.php" class="nav-link">
                   <i class="fas fa-stop-circle nav-icon"></i>

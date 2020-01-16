@@ -44,7 +44,15 @@ include"perfect_function.php";?>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-<a href="add_staff.php"><i class="btn btn-primary">Add Staff</i></a>
+    <?php 
+      if ($_SESSION['acct_type'] == 1 || $_SESSION['acct_type'] == 2) {
+        echo(
+          '
+            <a href="add_staff.php"><i class="btn btn-primary">Add Staff</i></a>
+          '
+        );
+      }
+    ?>
 </section>
 
             <!-- /.card-header -->
