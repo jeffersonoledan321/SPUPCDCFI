@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
 </head>
 
           <!-- /.card -->
@@ -46,17 +47,17 @@ include"perfect_function.php";?>
     </section>
          
 </section>
-		<form>
+		<form name="attendance-event" id="attendance-event">
 
 
             <!-- /.card-header -->
             <div class="card-body">
-            <a href="view_attendance.php"><i class="btn btn-success">Save</i></a><br><br>
+            <br><br>
             
               <table id="example1" class="table table-bordered table-striped">
                 <thead align="center">
                 <tr style="background-color: #808080">
-                  
+                  <th></th>
                   <th>First Name</th>
                   <th>Middle Name</th>
                   <th>Last Name</th>
@@ -127,6 +128,7 @@ include"perfect_function.php";?>
               }
               ?>
             </td> -->
+    <td><?=$id?></td>
  	 	<td><?=$qrfirstname?></td>
  	 	<td><?=$qrlastname?></td>
  	 	<td><?=$qrmiddlename?></td>
@@ -144,7 +146,7 @@ include"perfect_function.php";?>
                 </tbody>
                 <tfoot align="center">
                 <tr  style="background-color: #808080">
-                  
+                  <th></th>
                   <th>First Name</th>
                   <th>Middle Name</th>
                   <th>Last Name</th>
@@ -155,6 +157,7 @@ include"perfect_function.php";?>
 
               </table>
               <br>
+      <button type="submit" class="btn btn-success">Save</button>
               
             </div>
             <!-- /.card-body -->
@@ -163,6 +166,7 @@ include"perfect_function.php";?>
         </div>
         <!-- /.col -->
       </div>
+
       </form>
       <!-- /.row -->
     </section>
@@ -190,10 +194,36 @@ include"perfect_function.php";?>
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
+<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 <!-- page script -->
 <script>
   $(function () {
-    $("#example1").DataTable();
+    var table = $("#example1").DataTable({
+      'initComplete': function(settings){
+         var api = this.api();
+
+         api.cells(
+            api.rows(function(idx, data, node){
+               return (data[2] === 'Test') ? true : false;
+            }).indexes(),
+            0
+         ).checkboxes.select();
+      },
+      'columnDefs': [
+      {
+         'targets': 0,
+         'checkboxes': {
+            'selectRow': true
+         }
+      }
+   ],
+   'deferRender': true,
+   'select': {
+      'style': 'multi'
+   },
+   'order': [[1, 'asc']]
+    });
+
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
@@ -202,7 +232,35 @@ include"perfect_function.php";?>
       "info": true,
       "autoWidth": false,
     });
+
+
+  $('#attendance-event').on('submit', function(e){
+  
+    e.preventDefault();
+    alert("Hello! I am an alert box!!");
+
+    var form = this;
+
+    var rows_selected = table.column(0).checkboxes.selected();
+
+    alert(rows_selected.join(","));
+
+    // Iterate over all selected checkboxes
+    $.each(rows_selected, function(index, rowId){
+      // Create a hidden element
+      $(form).append(
+          $('<input>')
+              .attr('type', 'hidden')
+              .attr('name', 'id[]')
+              .val(rowId)
+      );
+    });
   });
+
+
+  });
+
+
 
 </script><div></div>
 </body>
