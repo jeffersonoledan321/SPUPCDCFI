@@ -161,6 +161,21 @@ include"perfect_function.php";?>
             '
           );
         }
+
+        if ($username == $_SESSION['username'] && $_SESSION['acct_type'] == 3) {
+          echo(
+            '
+            <a href="edit_staff.php?id='.$id.'">
+              <i class="fas fa-edit" style="color: blue"></i>
+            </a>
+            &nbsp;
+            <a href="staff_confirmdelete.php?id='.$id.'">
+              <i class=" fas fa-trash-alt" style="color: red" >  </i>
+            </a>
+            &nbsp
+            '
+          );
+        }
       ?>
 			
  			
