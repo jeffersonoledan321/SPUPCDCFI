@@ -122,6 +122,10 @@ include"perfect_function.php";?>
               ?>
               <span class="btn btn-primary">Admin</span>
               <?php
+              } elseif($account_type == 3) {
+                ?>
+                <span class="btn btn-info">Staff</span>
+                <?php
               }
               ?>  
             </td>
