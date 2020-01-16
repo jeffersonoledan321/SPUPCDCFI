@@ -127,14 +127,38 @@ include"perfect_function.php";?>
             </td>
  	 	<td>
  	 		
-			<a href="edit_staff.php?id=<?= $id ?>">
-				<i class="fas fa-edit" style="color: blue"></i>
-			</a>
-			&nbsp
-			<a href="staff_confirmdelete.php?id=<?= $id ?>">
-			<i class=" fas fa-trash-alt" style="color: red" >  </i>
-			</a>
-			&nbsp
+      <?php
+        if (($account_type == 1 || $account_type == 2 || $account_type == 3) && $_SESSION['acct_type'] == 1) {
+          echo(
+            '
+            <a href="edit_staff.php?id='.$id.'">
+              <i class="fas fa-edit" style="color: blue"></i>
+            </a>
+            &nbsp;
+            <a href="staff_confirmdelete.php?id='.$id.'">
+              <i class=" fas fa-trash-alt" style="color: red" >  </i>
+            </a>
+            &nbsp
+            '
+          );
+        }
+
+        if (($username == $_SESSION['username'] || $account_type == 3) && $_SESSION['acct_type'] == 2) {
+          echo(
+            '
+            <a href="edit_staff.php?id='.$id.'">
+              <i class="fas fa-edit" style="color: blue"></i>
+            </a>
+            &nbsp;
+            <a href="staff_confirmdelete.php?id='.$id.'">
+              <i class=" fas fa-trash-alt" style="color: red" >  </i>
+            </a>
+            &nbsp
+            '
+          );
+        }
+      ?>
+			
  			
 			<a href="staff_profile.php?id=<?= $id ?>" >
 				<i class="  fas fa-user-alt" style="  "> </i>
