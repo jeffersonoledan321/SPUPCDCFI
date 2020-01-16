@@ -116,11 +116,11 @@ include"perfect_function.php";?>
               <?php
               if($account_type==1) {
               ?>
-              <span class="btn btn-primary">Admin</span>
+              <span class="btn btn-danger">Super Admin</span>
               <?php
-              } else {
+              } elseif($account_type == 2) {
               ?>
-              <span class="btn btn-danger">Staff</span>
+              <span class="btn btn-primary">Admin</span>
               <?php
               }
               ?>  
