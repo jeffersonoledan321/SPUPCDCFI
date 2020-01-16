@@ -23,7 +23,6 @@
 	//array format
 
 	$data = array(
-		
 		"firstname"=>$firstname,
 		"middlename"=>$middlename,
 		"lastname"=>$lastname,
@@ -40,7 +39,7 @@
 
 	);
 
-	insert($data,$table_name);
+	$res = insert($data,$table_name);
 
 	header("location:volunteer_view.php");
 

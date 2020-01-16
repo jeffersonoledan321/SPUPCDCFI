@@ -112,7 +112,7 @@
   </div>
   <select name="account_type" class="custom-select" id="inputGroupSelect01" required="">
     <option value="">Account Type</option>
-    <option value="1">Admin</option>
+    <option value="1">Super Admin</option>
     <option value="2">Staff</option>
     
   </select>
