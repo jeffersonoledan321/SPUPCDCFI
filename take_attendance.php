@@ -71,6 +71,29 @@ include"perfect_function.php";?>
 </div>
                 
         <?php 
+        // Get data on currently attended students
+        // $attended = get_attendance($_GET['id']);
+        // $json_string = $attended->fetch_assoc()['attendance'];
+        // $attended_array = json_decode($json_string, true);
+        // $attended_obj = array();
+
+        // foreach ($attended_array['attendance'] as $key => $value) {
+        //   echo $value['id']."<br>";
+        // }
+
+        function checkId($id) {
+          $attended = get_attendance($_GET['id']);
+          $json_string = $attended->fetch_assoc()['attendance'];
+          $attended_array = json_decode($json_string, true);
+          foreach($attended_array['attendance'] as $key => $value) {
+            if ($value['id'] == $id) {
+              return $value;
+            }
+          }
+          return false;
+        }
+
+
  		$table_name="qrcodes";
  		$data=get($table_name);
  		foreach ($data as $key => $row) {
@@ -127,12 +150,31 @@ include"perfect_function.php";?>
               }
               ?>
             </td> -->
-    <td><input type="checkbox" name="student-<?=$id?>" id="student-<?=$id?>"></td>
+    <td>
+    <!-- <input type="checkbox" name="student-<?=$id?>" id="student-<?=$id?>"> -->
+    <?php
+      $res = checkId($id);
+      if ($res != false) {
+        echo '<input type="checkbox" name="student-'.$id.'" id="student-'.$id.'" checked>';
+      } else {
+        echo '<input type="checkbox" name="student-'.$id.'" id="student-'.$id.'">';
+      }
+    ?>
+    </td>
  	 	<td><?=$qrfirstname?></td>
  	 	<td><?=$qrlastname?></td>
  	 	<td><?=$qrmiddlename?></td>
-    <td>Present: <input type="time" name="present-<?=$id?>" id="present-<?=$id?>" disabled>
-    Dismissal: <input type="time" name="dismissal-<?=$id?>" id="dismissal-<?=$id?>" disabled></td>
+    <td style="text-align: left;">
+    <?php
+      if ($res != false) {
+        echo 'Present: <input type="time" name="present-'.$id.'" id="present-'.$id.'" value="'.$res['present'].'">&nbsp;&nbsp;&nbsp;&nbsp;';
+        echo 'Dismissal: <input type="time" name="dismissal-'.$id.'" id="dismissal-'.$id.'" value="'.$res['dismissal'].'">';
+      } else {
+        echo 'Present: <input type="time" name="present-'.$id.'" id="present-'.$id.'" disabled>&nbsp;&nbsp;&nbsp;&nbsp;';
+        echo 'Dismissal: <input type="time" name="dismissal-'.$id.'" id="dismissal-'.$id.'" disabled>';
+      }
+    ?>
+    </td>
 
  	 
  	 	
