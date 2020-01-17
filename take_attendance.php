@@ -47,7 +47,7 @@ include"perfect_function.php";?>
          
 </section>
 		<form name="attendance-event" id="attendance-event" method="POST" action="attendance_process.php">
-
+    <input type="hidden" name="id" id="id" value="<?=$_GET['id']?>">
 
             <!-- /.card-header -->
             <div class="card-body">

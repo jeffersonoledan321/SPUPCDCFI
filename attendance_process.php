@@ -1,5 +1,7 @@
 <?php
 
+    include 'perfect_function.php';
+
     $arr = array();
 
     // Check checkboxes
@@ -24,9 +26,13 @@
         array_push($json_output['attendance'], $tmp_arr);
     }
 
-    echo "<br>".json_encode($json_output);
-
+    $to_send = array(
+        "attendance" => json_encode($json_output)
+    );
     // Sending JSON to database
+    update($to_send, $_POST['id'], "add_event");
+    header("location: view_events.php");
+    die();
 
     
 

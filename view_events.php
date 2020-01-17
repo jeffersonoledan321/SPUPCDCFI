@@ -85,7 +85,7 @@ include"perfect_function.php";?>
  	 	
  	 	
  	 	<td align="center"><?=$endtime?></td>
-    <td><a href="take_attendance.php"><button class="btn btn-secondary">Attendance</button></a></td>
+    <td><a href="take_attendance.php?id=<?=$id?>"><button class="btn btn-secondary">Attendance</button></a></td>
  	 	<td align="center">
  	 		
 			<a href="edit_event.php?id=<?= $id ?>">
