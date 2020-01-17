@@ -97,7 +97,7 @@ include"perfect_function.php";?>
 			</a>
 			&nbsp
 			
-			<a href="view_attendance.php" >
+			<a href="view_attendance.php?id=<?= $id ?>" >
 				<i class="  fas fa-users" style="color: green "> </i>
 			</a>
 
