@@ -46,7 +46,7 @@ include"perfect_function.php";?>
     </section>
          
 </section>
-		<form name="attendance-event" id="attendance-event">
+		<form name="attendance-event" id="attendance-event" method="POST" action="attendance_process.php">
 
 
             <!-- /.card-header -->
@@ -131,8 +131,8 @@ include"perfect_function.php";?>
  	 	<td><?=$qrfirstname?></td>
  	 	<td><?=$qrlastname?></td>
  	 	<td><?=$qrmiddlename?></td>
-    <td>Present: <input type="time" name="present-<?=$id?>">
-    Absent: <input type="time" name="absent-<?=$id?>"></td>
+    <td>Present: <input type="time" name="present-<?=$id?>" id="present-<?=$id?>" disabled>
+    Dismissal: <input type="time" name="dismissal-<?=$id?>" id="dismissal-<?=$id?>" disabled></td>
 
  	 
  	 	
@@ -197,6 +197,22 @@ include"perfect_function.php";?>
 <script>
   $(function () {
     $("#example1").DataTable();
+
+    $('input[type=checkbox]').change(
+    function(){
+        var id = $(this).attr('id').substring(8);
+        if (this.checked) {
+            $('#present-' + id).prop("disabled", false);
+            $('#dismissal-' + id).prop("disabled", false);
+        } else {
+            $('#present-' + id).attr('value', '');
+            $('#present-' + id).val('');
+            $('#dismissal-' + id).attr('value', '');
+            $('#dismissal-' + id).val('');
+            $('#present-' + id).prop("disabled", true);
+            $('#dismissal-' + id).prop("disabled", true);
+        }
+    });
   });
 
 
