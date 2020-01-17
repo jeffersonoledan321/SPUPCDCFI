@@ -17,7 +17,6 @@
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <link type="text/css" href="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
 </head>
 
           <!-- /.card -->
@@ -57,11 +56,11 @@ include"perfect_function.php";?>
               <table id="example1" class="table table-bordered table-striped">
                 <thead align="center">
                 <tr style="background-color: #808080">
-                  <th></th>
+                  <th>Present?</th>
                   <th>First Name</th>
                   <th>Middle Name</th>
                   <th>Last Name</th>
-                  <th>Take Attendace</th>
+                  <th>Time Attended</th>
 
                   
                  
@@ -128,12 +127,12 @@ include"perfect_function.php";?>
               }
               ?>
             </td> -->
-    <td><?=$id?></td>
+    <td><input type="checkbox" name="student-<?=$id?>" id="student-<?=$id?>"></td>
  	 	<td><?=$qrfirstname?></td>
  	 	<td><?=$qrlastname?></td>
  	 	<td><?=$qrmiddlename?></td>
-    <td><input type="radio" name="present" value="Present">Present
-    <input type="radio" name="absent" value="Absent">Absent</td>
+    <td>Present: <input type="time" name="present-<?=$id?>">
+    Absent: <input type="time" name="absent-<?=$id?>"></td>
 
  	 
  	 	
@@ -146,11 +145,11 @@ include"perfect_function.php";?>
                 </tbody>
                 <tfoot align="center">
                 <tr  style="background-color: #808080">
-                  <th></th>
+                  <th>Present?</th>
                   <th>First Name</th>
                   <th>Middle Name</th>
                   <th>Last Name</th>
-                  <th>Take Attendance</th>
+                  <th>Time Attended</th>
                   
                 </tr>
                 </tfoot>
@@ -194,70 +193,10 @@ include"perfect_function.php";?>
 <script src="dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
-<script type="text/javascript" src="//gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
 <!-- page script -->
 <script>
   $(function () {
-    var table = $("#example1").DataTable({
-      'initComplete': function(settings){
-         var api = this.api();
-
-         api.cells(
-            api.rows(function(idx, data, node){
-               return (data[2] === 'Test') ? true : false;
-            }).indexes(),
-            0
-         ).checkboxes.select();
-      },
-      'columnDefs': [
-      {
-         'targets': 0,
-         'checkboxes': {
-            'selectRow': true
-         }
-      }
-   ],
-   'deferRender': true,
-   'select': {
-      'style': 'multi'
-   },
-   'order': [[1, 'asc']]
-    });
-
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-    });
-
-
-  $('#attendance-event').on('submit', function(e){
-  
-    e.preventDefault();
-    alert("Hello! I am an alert box!!");
-
-    var form = this;
-
-    var rows_selected = table.column(0).checkboxes.selected();
-
-    alert(rows_selected.join(","));
-
-    // Iterate over all selected checkboxes
-    $.each(rows_selected, function(index, rowId){
-      // Create a hidden element
-      $(form).append(
-          $('<input>')
-              .attr('type', 'hidden')
-              .attr('name', 'id[]')
-              .val(rowId)
-      );
-    });
-  });
-
-
+    $("#example1").DataTable();
   });
 
 
