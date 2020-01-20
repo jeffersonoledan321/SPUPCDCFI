@@ -41,6 +41,15 @@ function get_where($table_name, $id)
 	return $result;
 }
 
+function get_where_student_id($table_name, $name)
+{
+	$conn = getConnection();
+	$nameEXP = explode(" ", $name);
+	$sql = 'SELECT id FROM qrcodes WHERE qrfirstname="'.$nameEXP[0].'" AND qrlastname="'.$nameEXP[1].'"';
+	$result = $conn->query($sql);
+	return $result;
+}
+
 function get_where_profile($table_name, $id)
 {
 	$conn = getConnection();

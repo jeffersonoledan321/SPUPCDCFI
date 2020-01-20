@@ -104,6 +104,9 @@
                 <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
 
                 <p class="text-muted">Dont sleep when you are tired. Sleep when your done.</p>
+                <strong><i class="far fa-file-alt mr-1"></i> QR Image</strong>
+                <br>
+                <img src="userQr/<?=$qrimg ?>" alt="">
               </div>
               <!-- <a href="edit_directorprofile.php?id=<?= $id ?>" style="background-color: #F5FFFA" class="btn btn-block"><b>EDIT</b></a> -->
               <!-- /.card-body -->
