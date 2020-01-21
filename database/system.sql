@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jan 15, 2020 at 04:34 AM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.3.7
+-- Host: localhost
+-- Generation Time: Jan 17, 2020 at 10:20 AM
+-- Server version: 10.3.20-MariaDB
+-- PHP Version: 7.3.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,15 +33,17 @@ CREATE TABLE `add_event` (
   `eventname` varchar(65) NOT NULL,
   `eventdate` date NOT NULL,
   `starttime` varchar(6) NOT NULL,
-  `endtime` varchar(6) NOT NULL
+  `endtime` varchar(6) NOT NULL,
+  `attendance` text NOT NULL DEFAULT '{"attendance":[]}'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `add_event`
 --
 
-INSERT INTO `add_event` (`id`, `eventname`, `eventdate`, `starttime`, `endtime`) VALUES
-(11, 'feeding program', '2018-10-29', '22:57', '10:57');
+INSERT INTO `add_event` (`id`, `eventname`, `eventdate`, `starttime`, `endtime`, `attendance`) VALUES
+(11, 'feeding program', '2018-10-29', '22:57', '10:57', '{\"attendance\":[{\"id\":\"90\",\"present\":\"08:00\",\"dismissal\":\"\"},{\"id\":\"91\",\"present\":\"08:10\",\"dismissal\":\"\"},{\"id\":\"94\",\"present\":\"10:02\",\"dismissal\":\"\"}]}'),
+(15, 'Test Event 2', '2020-01-30', '08:14', '23:21', '{\"attendance\":[{\"id\":\"93\",\"present\":\"10:00\",\"dismissal\":\"12:00\"},{\"id\":\"95\",\"present\":\"14:00\",\"dismissal\":\"\"}]}');
 
 -- --------------------------------------------------------
 
@@ -57,15 +59,22 @@ CREATE TABLE `add_volunteer` (
   `birthdate` date NOT NULL,
   `gender` varchar(65) NOT NULL,
   `email` varchar(65) NOT NULL,
-  `contact` int(65) NOT NULL,
+  `contact` varchar(65) NOT NULL,
   `address` varchar(65) NOT NULL,
   `account_status` varchar(65) NOT NULL,
-  `photo` varchar(65) NOT NULL,
+  `photo` varchar(65) DEFAULT NULL,
   `status` varchar(65) NOT NULL,
   `skills` varchar(65) NOT NULL,
   `education` varchar(65) NOT NULL,
   `profession` varchar(65) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `add_volunteer`
+--
+
+INSERT INTO `add_volunteer` (`id`, `firstname`, `middlename`, `lastname`, `birthdate`, `gender`, `email`, `contact`, `address`, `account_status`, `photo`, `status`, `skills`, `education`, `profession`) VALUES
+(22, 'Test', 'Test', 'Test', '2000-01-01', '1', 'test@test.com', '0999848199941', 'Test098', '1', NULL, '1', 'Test', 'Test', 'Test');
 
 -- --------------------------------------------------------
 
@@ -85,7 +94,7 @@ CREATE TABLE `qrcodes` (
   `qrfathersname` varchar(65) NOT NULL,
   `qrmothersname` varchar(65) NOT NULL,
   `qrbloodtype` varchar(6) NOT NULL,
-  `qrcontactperson` int(11) NOT NULL,
+  `qrcontactperson` varchar(50) NOT NULL,
   `qraddress` varchar(65) NOT NULL,
   `qraccountstatus` varchar(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -95,9 +104,12 @@ CREATE TABLE `qrcodes` (
 --
 
 INSERT INTO `qrcodes` (`id`, `qrImg`, `qrlink`, `qrfirstname`, `qrmiddlename`, `qrlastname`, `qrbirthdate`, `qrgender`, `qrfathersname`, `qrmothersname`, `qrbloodtype`, `qrcontactperson`, `qraddress`, `qraccountstatus`) VALUES
-(90, 'aasdasdasdasd1471791822.png', 'localhost/qrcodeaasdasdasdasd1471791822.png', 'aasdasd', 'asdasd', 'asdasd', '2018-11-29', '2', 'dasdas', 'aasdad', '2', 0, 'asdasd', '2'),
-(91, 'jeffjeff944076395.png', 'localhost/qrcodejeffjeff944076395.png', 'jeff', 'jef', 'jeff', '2019-11-29', '2', 'a', 'Roberto Oledan', '2', 123456, 'usa', '1'),
-(92, 'sdasda274414491.png', 'localhost/qrcodesdasda274414491.png', 'sdasd', 'a', 'a', '2018-11-29', '2', 'o', 'Mildred Oledan', '2', 2, 'a', '2');
+(90, 'aasdasdasdasd1471791822.png', 'localhost/qrcodeaasdasdasdasd1471791822.png', 'aasdasd', 'asdasd', 'asdasd', '2018-11-29', '2', 'dasdas', 'aasdad', '2', '0', 'asdasd', '2'),
+(91, 'jeffjeff944076395.png', 'localhost/qrcodejeffjeff944076395.png', 'jeff', 'jef', 'jeff', '2019-11-29', '2', 'a', 'Roberto Oledan', '2', '123456', 'usa', '1'),
+(92, 'sdasda274414491.png', 'localhost/qrcodesdasda274414491.png', 'sdasd', 'a', 'a', '2018-11-29', '2', 'o', 'Mildred Oledan', '2', '2', 'a', '2'),
+(93, 'DanTest948417005.png', 'localhost/qrcodeDanTest948417005.png', 'Dan', 'Mazo', 'Test', '2016-10-13', '1', 'Test', 'Test', '1', 'Test', 'Test', '1'),
+(94, 'ExampleTest1158192610.png', 'localhost/qrcodeExampleTest1158192610.png', 'Example', 'X', 'Test', '2009-09-13', '1', 'Test', 'Test', '1', 'Test', 'Test', '1'),
+(95, 'BorsGum1150493517.png', 'localhost/qrcodeBorsGum1150493517.png', 'Bors', 'Gen', 'Gum', '1998-10-14', '1', 'Test', 'Test', '1', 'Test', 'Test', '1');
 
 -- --------------------------------------------------------
 
@@ -118,7 +130,7 @@ CREATE TABLE `staff` (
   `contact` int(12) NOT NULL,
   `address` varchar(65) NOT NULL,
   `account_status` varchar(65) NOT NULL,
-  `photo` varchar(65) NOT NULL,
+  `photo` varchar(65) DEFAULT NULL,
   `status` varchar(65) NOT NULL,
   `account_type` varchar(11) NOT NULL,
   `education` varchar(255) NOT NULL,
@@ -131,7 +143,11 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `username`, `password`, `firstname`, `middlename`, `lastname`, `birthdate`, `gender`, `email`, `contact`, `address`, `account_status`, `photo`, `status`, `account_type`, `education`, `skills`, `profession`) VALUES
-(27, 'jeff', 'oledan', 'jeff', 'oledan', 'oledan', '2018-10-28', '2', 'jeffoledan321@gmail.com', 123456, 'none', '1', 'avatar.png', '1', '1', 'none', 'none', 'none');
+(27, 'jeff', 'oledan', 'jeff', 'oledan', 'oledan', '2018-10-28', '2', 'jeffoledan321@gmail.com', 123456, 'none', '1', 'avatar.png', '1', '1', 'none', 'none', 'none'),
+(29, 'testuseradmin', 'testpass', 'testadmin', 'testadmin', 'testadmin', '2014-10-28', '1', 'test@test123.com', 22200, 'Test098', '1', NULL, '1', '2', 'test', 'test', 'tedt'),
+(30, 'testadmin', 'testpass', 'testadmin', 'testadmin', 'testadmin', '2015-09-27', '1', 'test@test123.com', 22200, 'test', '1', NULL, '1', '2', 'test', 'test', 'tedt'),
+(31, 'testuserstaff', 'testpass', 'teststaff', 'teststaff', 'teststaff', '2013-09-27', '1', 'teststaff@staff.com', 22200, 'test', '1', NULL, '1', '3', 'test', 'test', 'tedt'),
+(32, 'teststaff', 'testpass', 'teststaff', 'teststaff', 'teststaff', '2011-08-25', '1', 'teststaff@staff.com', 22200, 'teststaff', '1', NULL, '1', '3', 'teststaff', 'teststaff', 'teststaff');
 
 --
 -- Indexes for dumped tables
@@ -169,25 +185,25 @@ ALTER TABLE `staff`
 -- AUTO_INCREMENT for table `add_event`
 --
 ALTER TABLE `add_event`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `add_volunteer`
 --
 ALTER TABLE `add_volunteer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `qrcodes`
 --
 ALTER TABLE `qrcodes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=93;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=96;
 
 --
 -- AUTO_INCREMENT for table `staff`
 --
 ALTER TABLE `staff`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

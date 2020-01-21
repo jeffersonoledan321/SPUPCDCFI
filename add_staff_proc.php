@@ -46,7 +46,6 @@
 	insert($data,$table_name);
 
 	header("location:view_staff.php");
-	echo "nicetol";
 
 
  ?>

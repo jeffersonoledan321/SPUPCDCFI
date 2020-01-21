@@ -76,25 +76,29 @@ include"perfect_function.php";?>
 </div>
                 
         <?php 
-    $table_name="add_event";
-    $data=get($table_name);
-    foreach ($data as $key => $row) {
-      $id=$row['id'];
-      
-      $eventname=$row['eventname'];
-      $eventdate=$row['eventdate'];
-      $starttime=$row['starttime'];
-      $endtime=$row['endtime'];
+    $event_id = $_GET['id'];
+    $data=get_attendance($event_id);
+    $row = $data->fetch_assoc();
+    $event = get_where("add_event", $event_id);
+    $event_data = $event->fetch_assoc();
+    $json_obj = json_decode($row['attendance'], true);
+    foreach ($json_obj['attendance'] as $key => $val) {      
       
    ?>
    <tr align="center">
 
-    <td>Jefferson Oledan</td>
-    <td>2020-01-01</td>
-    <td>7:00 AM</td>
+    <td>
+      <?php
+        $qrcodes = get_where("qrcodes", $val['id']);
+        $qrcodes_data = $qrcodes->fetch_assoc();
+        echo $qrcodes_data['qrfirstname']." ".$qrcodes_data['qrlastname'];
+      ?>
+    </td>
+    <td><?=$event_data['eventdate'] ?></td>
+    <td><?=$val['present'] ?></td>
     
     
-    <td align="center">4:00 PM</td>
+    <td align="center"><?=$val['dismissal'] ?></td>
    
    </tr>
    <?php } ?>

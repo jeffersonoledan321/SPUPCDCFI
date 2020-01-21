@@ -24,10 +24,28 @@ function get($table_name)
 	return $result;
 }
 
+// Get attendance JSON object literal
+function get_attendance($id)
+{
+	$conn = getConnection();
+	$sql = "SELECT attendance FROM add_event where id=$id";
+	$result = $conn->query($sql);
+	return $result;
+}
+
 function get_where($table_name, $id)
 {
 	$conn = getConnection();
 	$sql = "SELECT * FROM $table_name where id=$id";
+	$result = $conn->query($sql);
+	return $result;
+}
+
+function get_where_student_id($table_name, $name)
+{
+	$conn = getConnection();
+	$nameEXP = explode(" ", $name);
+	$sql = 'SELECT id FROM qrcodes WHERE qrfirstname="'.$nameEXP[0].'" AND qrlastname="'.$nameEXP[1].'"';
 	$result = $conn->query($sql);
 	return $result;
 }

@@ -44,7 +44,15 @@ include"perfect_function.php";?>
         </div>
       </div><!-- /.container-fluid -->
     </section>
-<a href="add_staff.php"><i class="btn btn-primary">Add Staff</i></a>
+    <?php 
+      if ($_SESSION['acct_type'] == 1 || $_SESSION['acct_type'] == 2) {
+        echo(
+          '
+            <a href="add_staff.php"><i class="btn btn-primary">Add Staff</i></a>
+          '
+        );
+      }
+    ?>
 </section>
 
             <!-- /.card-header -->
@@ -116,25 +124,68 @@ include"perfect_function.php";?>
               <?php
               if($account_type==1) {
               ?>
+              <span class="btn btn-danger">Super Admin</span>
+              <?php
+              } elseif($account_type == 2) {
+              ?>
               <span class="btn btn-primary">Admin</span>
               <?php
-              } else {
-              ?>
-              <span class="btn btn-danger">Staff</span>
-              <?php
+              } elseif($account_type == 3) {
+                ?>
+                <span class="btn btn-info">Staff</span>
+                <?php
               }
               ?>  
             </td>
  	 	<td>
  	 		
-			<a href="edit_staff.php?id=<?= $id ?>">
-				<i class="fas fa-edit" style="color: blue"></i>
-			</a>
-			&nbsp
-			<a href="staff_confirmdelete.php?id=<?= $id ?>">
-			<i class=" fas fa-trash-alt" style="color: red" >  </i>
-			</a>
-			&nbsp
+      <?php
+        if (($account_type == 1 || $account_type == 2 || $account_type == 3) && $_SESSION['acct_type'] == 1) {
+          echo(
+            '
+            <a href="edit_staff.php?id='.$id.'">
+              <i class="fas fa-edit" style="color: blue"></i>
+            </a>
+            &nbsp;
+            <a href="staff_confirmdelete.php?id='.$id.'">
+              <i class=" fas fa-trash-alt" style="color: red" >  </i>
+            </a>
+            &nbsp
+            '
+          );
+        }
+
+        if (($username == $_SESSION['username'] || $account_type == 3) && $_SESSION['acct_type'] == 2) {
+          echo(
+            '
+            <a href="edit_staff.php?id='.$id.'">
+              <i class="fas fa-edit" style="color: blue"></i>
+            </a>
+            &nbsp;
+            <a href="staff_confirmdelete.php?id='.$id.'">
+              <i class=" fas fa-trash-alt" style="color: red" >  </i>
+            </a>
+            &nbsp
+            '
+          );
+        }
+
+        if ($username == $_SESSION['username'] && $_SESSION['acct_type'] == 3) {
+          echo(
+            '
+            <a href="edit_staff.php?id='.$id.'">
+              <i class="fas fa-edit" style="color: blue"></i>
+            </a>
+            &nbsp;
+            <a href="staff_confirmdelete.php?id='.$id.'">
+              <i class=" fas fa-trash-alt" style="color: red" >  </i>
+            </a>
+            &nbsp
+            '
+          );
+        }
+      ?>
+			
  			
 			<a href="staff_profile.php?id=<?= $id ?>" >
 				<i class="  fas fa-user-alt" style="  "> </i>

@@ -46,21 +46,21 @@ include"perfect_function.php";?>
     </section>
          
 </section>
-		<form>
-
+		<form name="attendance-event" id="attendance-event" method="POST" action="attendance_process.php">
+    <input type="hidden" name="id" id="id" value="<?=$_GET['id']?>">
 
             <!-- /.card-header -->
             <div class="card-body">
-            <a href="view_attendance.php"><i class="btn btn-success">Save</i></a><br><br>
+            <br><br>
             
               <table id="example1" class="table table-bordered table-striped">
                 <thead align="center">
                 <tr style="background-color: #808080">
-                  
+                  <th>Present?</th>
                   <th>First Name</th>
                   <th>Middle Name</th>
                   <th>Last Name</th>
-                  <th>Take Attendace</th>
+                  <th>Time Attended</th>
 
                   
                  
@@ -71,6 +71,29 @@ include"perfect_function.php";?>
 </div>
                 
         <?php 
+        // Get data on currently attended students
+        // $attended = get_attendance($_GET['id']);
+        // $json_string = $attended->fetch_assoc()['attendance'];
+        // $attended_array = json_decode($json_string, true);
+        // $attended_obj = array();
+
+        // foreach ($attended_array['attendance'] as $key => $value) {
+        //   echo $value['id']."<br>";
+        // }
+
+        function checkId($id) {
+          $attended = get_attendance($_GET['id']);
+          $json_string = $attended->fetch_assoc()['attendance'];
+          $attended_array = json_decode($json_string, true);
+          foreach($attended_array['attendance'] as $key => $value) {
+            if ($value['id'] == $id) {
+              return $value;
+            }
+          }
+          return false;
+        }
+
+
  		$table_name="qrcodes";
  		$data=get($table_name);
  		foreach ($data as $key => $row) {
@@ -127,11 +150,31 @@ include"perfect_function.php";?>
               }
               ?>
             </td> -->
+    <td>
+    <!-- <input type="checkbox" name="student-<?=$id?>" id="student-<?=$id?>"> -->
+    <?php
+      $res = checkId($id);
+      if ($res != false) {
+        echo '<input type="checkbox" name="student-'.$id.'" id="student-'.$id.'" checked>';
+      } else {
+        echo '<input type="checkbox" name="student-'.$id.'" id="student-'.$id.'">';
+      }
+    ?>
+    </td>
  	 	<td><?=$qrfirstname?></td>
  	 	<td><?=$qrlastname?></td>
  	 	<td><?=$qrmiddlename?></td>
-    <td><input type="radio" name="present" value="Present">Present
-    <input type="radio" name="absent" value="Absent">Absent</td>
+    <td style="text-align: left;">
+    <?php
+      if ($res != false) {
+        echo 'Present: <input type="time" name="present-'.$id.'" id="present-'.$id.'" value="'.$res['present'].'">&nbsp;&nbsp;&nbsp;&nbsp;';
+        echo 'Dismissal: <input type="time" name="dismissal-'.$id.'" id="dismissal-'.$id.'" value="'.$res['dismissal'].'">';
+      } else {
+        echo 'Present: <input type="time" name="present-'.$id.'" id="present-'.$id.'" disabled>&nbsp;&nbsp;&nbsp;&nbsp;';
+        echo 'Dismissal: <input type="time" name="dismissal-'.$id.'" id="dismissal-'.$id.'" disabled>';
+      }
+    ?>
+    </td>
 
  	 
  	 	
@@ -144,17 +187,18 @@ include"perfect_function.php";?>
                 </tbody>
                 <tfoot align="center">
                 <tr  style="background-color: #808080">
-                  
+                  <th>Present?</th>
                   <th>First Name</th>
                   <th>Middle Name</th>
                   <th>Last Name</th>
-                  <th>Take Attendance</th>
+                  <th>Time Attended</th>
                   
                 </tr>
                 </tfoot>
 
               </table>
               <br>
+      <button type="submit" class="btn btn-success">Save</button>
               
             </div>
             <!-- /.card-body -->
@@ -163,6 +207,7 @@ include"perfect_function.php";?>
         </div>
         <!-- /.col -->
       </div>
+
       </form>
       <!-- /.row -->
     </section>
@@ -194,15 +239,25 @@ include"perfect_function.php";?>
 <script>
   $(function () {
     $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
+
+    $('input[type=checkbox]').change(
+    function(){
+        var id = $(this).attr('id').substring(8);
+        if (this.checked) {
+            $('#present-' + id).prop("disabled", false);
+            $('#dismissal-' + id).prop("disabled", false);
+        } else {
+            $('#present-' + id).attr('value', '');
+            $('#present-' + id).val('');
+            $('#dismissal-' + id).attr('value', '');
+            $('#dismissal-' + id).val('');
+            $('#present-' + id).prop("disabled", true);
+            $('#dismissal-' + id).prop("disabled", true);
+        }
     });
   });
+
+
 
 </script><div></div>
 </body>
